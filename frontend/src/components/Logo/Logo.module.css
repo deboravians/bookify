@@ -1,0 +1,37 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.light .mark {
+  color: var(--color-primary);
+  background-color: var(--white);
+}
+
+.light .name {
+  color: var(--white);
+}
+
+.dark .mark {
+  color: var(--color-on-primary);
+  background-color: var(--color-primary);
+}
+
+.dark .name {
+  color: var(--color-text);
+}

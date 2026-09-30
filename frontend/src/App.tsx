@@ -1,8 +1,7 @@
-function App() {
+import { LoginPage } from '@/features/auth/pages/LoginPage'
 
-  return (
-    <h1>Olá, Mundo!</h1>
-  )
+function App() {
+  return <LoginPage />
 }
 
 export default App
