@@ -4,6 +4,10 @@ import { Student } from "../models/student.model";
 
 type StudentData = InferSchemaType<typeof Student.schema>;
 
+export async function findAllStudents() {
+  return Student.find({ }).select("_id registration name phone address status").lean().exec();
+}
+
 export async function insertStudent(data: StudentData) {
   try {
     // Garante o índice único inclusive no primeiro cadastro.

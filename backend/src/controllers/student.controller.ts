@@ -1,5 +1,14 @@
 ﻿import type { RequestHandler } from "express";
-import { registerStudent } from "../services/student.service";
+import { listStudents, registerStudent } from "../services/student.service";
+
+export const getStudents: RequestHandler = async (_req, res, next) => {
+  try {
+    const students = await listStudents();
+    res.status(200).json(students);
+  } catch (error: unknown) {
+    next(error);
+  }
+};
 
 export const createStudent: RequestHandler = async (req, res, next) => {
   try {
