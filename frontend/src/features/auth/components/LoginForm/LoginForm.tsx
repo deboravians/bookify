@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/Button/Button'
 import { PasswordField } from '@/components/ui/PasswordField/PasswordField'
@@ -10,6 +11,7 @@ import styles from './LoginForm.module.css'
 
 export function LoginForm() {
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -23,6 +25,7 @@ export function LoginForm() {
     setSubmitError(null)
     try {
       await login(data)
+      navigate('/alunos', { replace: true })
     } catch {
       setSubmitError('Não foi possível entrar. Verifique suas credenciais.')
     }
