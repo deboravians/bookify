@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate } from 'react-router'
+import { AppLayout } from '@/components/layout/AppLayout/AppLayout'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
 import { CreateStudentPage } from '@/features/students/pages/CreateStudentPage'
 import { EditStudentPage } from '@/features/students/pages/EditStudentPage'
@@ -7,20 +8,15 @@ import { StudentsListPage } from '@/features/students/pages/StudentsListPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
+  { path: '/', element: <Navigate to="/login" replace /> },
   { path: '/login', element: <LoginPage /> },
   {
-    path: '/',
+    element: <AppLayout />,
     children: [
-      { index: true, element: <Navigate to="/login" replace /> },
-      {
-        path: 'alunos',
-        children: [
-          { index: true, element: <StudentsListPage /> },
-          { path: 'novo', element: <CreateStudentPage /> },
-          { path: ':id', element: <StudentProfilePage /> },
-          { path: ':id/editar', element: <EditStudentPage /> },
-        ],
-      },
+      { path: '/alunos', element: <StudentsListPage /> },
+      { path: '/alunos/novo', element: <CreateStudentPage /> },
+      { path: '/alunos/:id', element: <StudentProfilePage /> },
+      { path: '/alunos/:id/editar', element: <EditStudentPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },
