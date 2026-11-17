@@ -4,10 +4,10 @@ Este repositório contém o sistema de gerenciamento de biblioteca desenvolvido 
 
 ## 📂 Estrutura do Projeto
 
-- `backend/`: API REST desenvolvida com NestJS e TypeScript, responsável pela lógica de negócio e persistência de dados.
+- `backend/`: API REST com Express, TypeScript e MongoDB.
 - `frontend/`: Aplicação web desenvolvida com React e TypeScript, responsável pela interface do usuário.
 
-## 🚀 Funcionalidades Principais
+## 🚀 Funcionalidades Planejadas
 
 - Cadastro e gerenciamento de alunos e professores (leitores)
 - Consulta e histórico de empréstimos/devoluções por leitor
@@ -19,26 +19,28 @@ Este repositório contém o sistema de gerenciamento de biblioteca desenvolvido 
 
 ## 🛠️ Tecnologias Utilizadas
 
-- NestJS + TypeScript (backend)
+- Express + TypeScript (backend)
 - React + TypeScript (frontend)
-- PostgreSQL (banco de dados)
-- Docker (ambiente do backend)
+- MongoDB + Mongoose (banco de dados)
 
 ---
 
-## 📦 Como Executar o Back-end com Docker Compose
+## 📦 Como Executar o Back-end
 
-Com o repositório já clonado e com o Docker já instalado (e rodando)
+Com Node.js 22 ou superior instalado:
 
-Construa a imagem, usando o comando:
+```sh
+cd backend
+npm ci
+```
 
-    - "docker-compose build"
+Copie `.env.example` para `.env` e configure `MONGODB_URI` (por padrão, `mongodb://127.0.0.1:27017/bookify`). Com o MongoDB em execução, inicie a API:
 
-Depois, suba o container, usando o comando:
+```sh
+npm run dev
+```
 
-    - "docker-compose up"
-
-- Acesse o Back-end: O servidor estará disponível em http://localhost:3000.
+- Verifique a API em http://localhost:5000/health.
 
 ---
 
