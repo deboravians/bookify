@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/Button/Button'
 import { PasswordField } from '@/components/ui/PasswordField/PasswordField'
 import { TextField } from '@/components/ui/TextField/TextField'
-import { loginSchema, type LoginFormData } from '../../schemas/loginSchema'
-import { login } from '../../services/authService'
+import { login, type LoginFormData } from '../../services/authService'
 import styles from './LoginForm.module.css'
 
 export function LoginForm() {
@@ -17,7 +15,6 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' },
   })
 
@@ -50,7 +47,10 @@ export function LoginForm() {
           autoComplete="email"
           required
           error={errors.email?.message}
-          {...register('email')}
+          {...register('email', {
+            required: 'Informe seu e-mail.',
+            pattern: { value: /^\S+@\S+\.\S+$/, message: 'Informe um e-mail válido.' },
+          })}
         />
 
         <PasswordField
@@ -59,7 +59,7 @@ export function LoginForm() {
           autoComplete="current-password"
           required
           error={errors.password?.message}
-          {...register('password')}
+          {...register('password', { required: 'Informe sua senha.' })}
         />
 
         {submitError && (

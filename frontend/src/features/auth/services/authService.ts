@@ -1,4 +1,7 @@
-import type { LoginFormData } from '../schemas/loginSchema'
+export type LoginFormData = {
+  email: string
+  password: string
+}
 
 export type AuthUser = {
   id: string

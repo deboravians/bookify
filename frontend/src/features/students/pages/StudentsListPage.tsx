@@ -1,24 +1,25 @@
-import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
 import { Plus } from 'lucide-react'
 import { ButtonLink } from '@/components/ui/Button/Button'
 import { PageHeader } from '@/components/ui/PageHeader/PageHeader'
 import { SearchInput } from '@/components/ui/SearchInput/SearchInput'
 import { StudentsTable } from '../components/StudentsTable/StudentsTable'
 import { listStudents } from '../services/studentService'
+import type { Student } from '../types'
 import styles from './StudentsListPage.module.css'
 
 export function StudentsListPage() {
+  const [students, setStudents] = useState<Student[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
   const [search, setSearch] = useState('')
 
-  const {
-    data: students = [],
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ['students'],
-    queryFn: listStudents,
-  })
+  useEffect(() => {
+    listStudents()
+      .then(setStudents)
+      .catch(() => setIsError(true))
+      .finally(() => setIsLoading(false))
+  }, [])
 
   const term = search.trim().toLowerCase()
   const filteredStudents = students.filter(
