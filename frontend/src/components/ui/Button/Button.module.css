@@ -56,6 +56,16 @@
   background-color: var(--color-background);
 }
 
+.danger {
+  color: var(--color-danger);
+  background-color: var(--color-surface);
+  border-color: var(--color-danger);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--red-100);
+}
+
 .fullWidth {
   width: 100%;
 }
