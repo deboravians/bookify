@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AppLayout } from '@/components/layout/AppLayout/AppLayout'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
+import { ClassificationsListPage } from '@/features/classifications/pages/ClassificationsListPage'
 import { CreateStudentPage } from '@/features/students/pages/CreateStudentPage'
 import { EditStudentPage } from '@/features/students/pages/EditStudentPage'
 import { StudentProfilePage } from '@/features/students/pages/StudentProfilePage'
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: '/alunos/novo', element: <CreateStudentPage /> },
       { path: '/alunos/:id', element: <StudentProfilePage /> },
       { path: '/alunos/:id/editar', element: <EditStudentPage /> },
+      { path: '/classificacoes', element: <ClassificationsListPage /> },
     ],
   },
   { path: '*', element: <NotFoundPage /> },

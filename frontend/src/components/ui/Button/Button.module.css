@@ -56,6 +56,15 @@
   background-color: var(--color-background);
 }
 
+.subtle {
+  color: var(--color-text);
+  background-color: var(--sand-100);
+}
+
+.subtle:hover:not(:disabled) {
+  background-color: var(--sand-200);
+}
+
 .danger {
   color: var(--color-danger);
   background-color: var(--color-surface);
