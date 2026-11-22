@@ -16,9 +16,15 @@ type StudentFormProps = {
   defaultValues?: StudentInput
   onSubmit: (data: StudentInput) => Promise<void>
   cancelTo: string
+  submitLabel?: string
 }
 
-export function StudentForm({ defaultValues = emptyStudent, onSubmit, cancelTo }: StudentFormProps) {
+export function StudentForm({
+  defaultValues = emptyStudent,
+  onSubmit,
+  cancelTo,
+  submitLabel = 'Salvar Cadastro',
+}: StudentFormProps) {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const {
     register,
@@ -95,7 +101,7 @@ export function StudentForm({ defaultValues = emptyStudent, onSubmit, cancelTo }
           Cancelar
         </ButtonLink>
         <Button type="submit" isLoading={isSubmitting}>
-          {isSubmitting ? 'Salvando...' : 'Salvar Cadastro'}
+          {isSubmitting ? 'Salvando...' : submitLabel}
         </Button>
       </div>
     </form>

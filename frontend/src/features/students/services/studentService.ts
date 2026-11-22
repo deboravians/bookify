@@ -137,6 +137,10 @@ export async function createStudent(data: StudentInput): Promise<Student> {
 
 export async function updateStudent(id: string, data: StudentInput): Promise<Student> {
   const student = await getStudent(id)
+  if (students.some((s) => s.registration === data.registration && s.id !== id)) {
+    throw new Error('Já existe um aluno com essa matrícula.')
+  }
+
   const updated: Student = { ...student, ...data }
   students = students.map((s) => (s.id === id ? updated : s))
   return updated
