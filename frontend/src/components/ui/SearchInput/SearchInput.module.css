@@ -16,11 +16,6 @@
   box-shadow: 0 0 0 3px var(--color-focus-ring);
 }
 
-.pill {
-  background-color: var(--color-background);
-  border-radius: var(--radius-full);
-}
-
 .icon {
   flex-shrink: 0;
   color: var(--color-text-muted);
