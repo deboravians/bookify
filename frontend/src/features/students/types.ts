@@ -16,3 +16,14 @@ export type Student = {
 }
 
 export type StudentInput = Omit<Student, 'id' | 'active'>
+
+export type LoanStatus = 'em_andamento' | 'devolvido' | 'em_atraso'
+
+export type Loan = {
+  id: string
+  studentId: string
+  bookTitle: string
+  loanDate: string
+  returnDate: string
+  status: LoanStatus
+}

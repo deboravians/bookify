@@ -33,7 +33,7 @@ export function BrandPanel({ quote = DEFAULT_QUOTE }: BrandPanelProps) {
           <blockquote>
             <p>“{quote.text}”</p>
           </blockquote>
-          <figcaption>— {quote.author}</figcaption>
+          <figcaption>- {quote.author}</figcaption>
         </figure>
       </div>
 

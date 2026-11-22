@@ -27,7 +27,7 @@ export function StudentsTable({ students }: StudentsTableProps) {
             <tr key={student.id}>
               <td className={styles.registration}>{student.registration}</td>
               <td>{student.name}</td>
-              <td className={styles.muted}>{student.phone || '—'}</td>
+              <td className={styles.muted}>{student.phone || '-'}</td>
               <td>
                 <Badge tone={student.active ? 'success' : 'neutral'}>
                   {student.active ? 'Ativo' : 'Inativo'}

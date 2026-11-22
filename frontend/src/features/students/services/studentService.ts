@@ -1,4 +1,4 @@
-import type { Student, StudentInput } from '../types'
+import type { Loan, Student, StudentInput } from '../types'
 
 let students: Student[] = [
   {
@@ -73,6 +73,41 @@ let students: Student[] = [
   },
 ]
 
+const loans: Loan[] = [
+  {
+    id: '1',
+    studentId: '1',
+    bookTitle: 'O Alquimista',
+    loanDate: '2024-02-10',
+    returnDate: '2024-02-24',
+    status: 'devolvido',
+  },
+  {
+    id: '2',
+    studentId: '1',
+    bookTitle: 'Dom Casmurro',
+    loanDate: '2024-03-01',
+    returnDate: '2024-03-15',
+    status: 'devolvido',
+  },
+  {
+    id: '3',
+    studentId: '1',
+    bookTitle: 'Cem Anos de Solidão',
+    loanDate: '2024-03-20',
+    returnDate: '2024-04-03',
+    status: 'em_atraso',
+  },
+  {
+    id: '4',
+    studentId: '2',
+    bookTitle: 'Memórias Póstumas de Brás Cubas',
+    loanDate: '2024-04-02',
+    returnDate: '2024-04-16',
+    status: 'em_andamento',
+  },
+]
+
 function delay(ms = 500) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
@@ -112,4 +147,9 @@ export async function setStudentActive(id: string, active: boolean): Promise<Stu
   const updated: Student = { ...student, active }
   students = students.map((s) => (s.id === id ? updated : s))
   return updated
+}
+
+export async function getStudentLoans(studentId: string): Promise<Loan[]> {
+  await delay()
+  return loans.filter((loan) => loan.studentId === studentId)
 }
