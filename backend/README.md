@@ -59,48 +59,6 @@ Acesse `GET http://localhost:5000/health`:
 
 Essa rota indica que o servidor HTTP está respondendo;
 
-## Organização do backend
-
-- `src/app.ts`: configura o Express, os middlewares e a montagem das rotas.
-- `src/server.ts`: conecta ao banco e gerencia o ciclo de vida do servidor.
-- `src/routes/auth.routes.ts`: define as rotas de autenticação.
-- `src/controllers/auth.controller.ts`: valida a entrada HTTP e retorna os status e mensagens.
-- `src/services/auth.service.ts`: compara as credenciais fixas do administrador, sem acesso ao banco ou dependência do Express.
-
-O endpoint `POST /api/auth/login` recebe JSON com `username` e `password`.
-As credenciais configuradas em `ADMIN_USERNAME` e `ADMIN_PASSWORD` retornam 200; credenciais incorretas retornam 401;
-campos ausentes, vazios ou com tipos inválidos retornam 400.
-O login retorna `accessToken`, `tokenType` (`Bearer`) e `expiresIn` (segundos).
-Configure `JWT_SECRET` com pelo menos 32 bytes e `JWT_EXPIRES_IN` com um inteiro positivo em segundos.
-
-As rotas da API exigem o JWT no cabeçalho `Authorization: Bearer <accessToken>`,
-incluindo `GET /api/students` e `POST /api/students`. O login e `GET /health` são públicos.
-Tokens ausentes, inválidos ou expirados retornam 401.
-
-```sh
-curl http://localhost:5000/api/students -H "Authorization: Bearer <accessToken>"
-```
-
-## Status dos alunos (GA006 e GA007)
-
-O cadastro cria alunos com `status: "ATIVO"`. Para inativar ou reativar um aluno,
-use `PATCH /api/students/:id/status`, substituindo `:id` pelo `_id` retornado na
-listagem. A rota exige `Authorization: Bearer <accessToken>` e
-`Content-Type: application/json`.
-
-```json
-{ "status": "INATIVO" }
-```
-
-Para reativar, envie `{ "status": "ATIVO" }`. A resposta é 200 com `message` e
-`student` atualizado. Repetir o status atual também retorna 200. ID ou body
-inválido retorna 400; aluno inexistente retorna 404. A alteração preserva o
-cadastro e modifica apenas o status.
-
-Na inicialização da API, os status booleanos existentes são convertidos no banco:
-`true` para `ATIVO` e `false` para `INATIVO`. Reinicie a API após atualizar o código.
-A listagem e a pesquisa continuam incluindo alunos ativos e inativos.
-
 ## Scripts
 
 | Comando | Descrição |

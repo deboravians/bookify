@@ -4,6 +4,24 @@ import { Student, type StudentStatus } from "../models/student.model";
 
 type StudentData = InferSchemaType<typeof Student.schema>;
 
+export async function updateStudent(id: string, data: Omit<StudentData, "status">) {
+  try {
+    await Student.init();
+    return await Student.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true })
+      .select("_id registration name phone address status").lean().exec();
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error && error.code === 11000) {
+      throw new AppError(409, "Matrícula já cadastrada.");
+    }
+
+    if (error instanceof MongooseError.ValidationError || error instanceof MongooseError.CastError) {
+      throw new AppError(400, "Dados do aluno inválidos.");
+    }
+
+    throw error;
+  }
+}
+
 export async function migrateStudentStatuses(): Promise<void> {
   // Usa a coleção diretamente para preservar o tipo booleano no filtro legado.
   await Student.collection.updateMany(
