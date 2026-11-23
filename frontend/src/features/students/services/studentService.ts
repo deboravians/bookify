@@ -1,77 +1,23 @@
-import type { Loan, Student, StudentInput } from '../types'
+import { apiFetch } from '@/lib/api'
+import type { Address, Loan, Student, StudentInput } from '../types'
 
-let students: Student[] = [
-  {
-    id: '1',
-    registration: '2024001',
-    name: 'Ana Beatriz Ramos',
-    phone: '(11) 98765-4321',
-    address: {
-      city: 'São Paulo',
-      neighborhood: 'Bairro Verde',
-      street: 'Rua das Oliveiras',
-      number: '45',
-      complement: '',
-    },
-    active: true,
-  },
-  {
-    id: '2',
-    registration: '2024002',
-    name: 'Carlos Eduardo Santos',
-    phone: '(11) 98888-1111',
-    address: {
-      city: 'São Paulo',
-      neighborhood: 'Centro',
-      street: 'Rua Augusta',
-      number: '120',
-      complement: 'Apto 32',
-    },
-    active: true,
-  },
-  {
-    id: '3',
-    registration: '2024003',
-    name: 'Gabriel Henrique Lima',
-    phone: '(11) 97777-2222',
-    address: {
-      city: 'São Paulo',
-      neighborhood: 'Mooca',
-      street: 'Rua da Mooca',
-      number: '890',
-      complement: '',
-    },
-    active: false,
-  },
-  {
-    id: '4',
-    registration: '2024004',
-    name: 'Julia Mendonça',
-    phone: '(11) 96666-3333',
-    address: {
-      city: 'São Paulo',
-      neighborhood: 'Pinheiros',
-      street: 'Rua dos Pinheiros',
-      number: '310',
-      complement: 'Bloco B',
-    },
-    active: true,
-  },
-  {
-    id: '5',
-    registration: '2024005',
-    name: 'Mariana Souza Oliveira',
-    phone: '(11) 95555-4444',
-    address: {
-      city: 'São Paulo',
-      neighborhood: 'Vila Mariana',
-      street: 'Rua Domingos de Morais',
-      number: '1500',
-      complement: '',
-    },
-    active: true,
-  },
-]
+type ApiStudent = {
+  _id: string
+  registration: string
+  name: string
+  phone: string
+  address: Omit<Address, 'complement'> & { complement?: string }
+  status: 'ATIVO' | 'INATIVO'
+}
+
+function toStudent({ _id, status, address, ...rest }: ApiStudent): Student {
+  return {
+    ...rest,
+    id: _id,
+    address: { ...address, complement: address.complement ?? '' },
+    active: status === 'ATIVO',
+  }
+}
 
 const loans: Loan[] = [
   {
@@ -108,52 +54,43 @@ const loans: Loan[] = [
   },
 ]
 
-function delay(ms = 500) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
 export async function listStudents(): Promise<Student[]> {
-  await delay()
-  return students
+  const students = await apiFetch<ApiStudent[]>('/api/students')
+  return students.map(toStudent)
 }
 
 export async function getStudent(id: string): Promise<Student> {
-  await delay()
+  const students = await listStudents()
   const student = students.find((s) => s.id === id)
   if (!student) throw new Error('Aluno não encontrado.')
   return student
 }
 
 export async function createStudent(data: StudentInput): Promise<Student> {
-  await delay()
-  if (students.some((s) => s.registration === data.registration)) {
-    throw new Error('Já existe um aluno com essa matrícula.')
-  }
-
-  const newStudent: Student = { ...data, id: crypto.randomUUID(), active: true }
-  students = [...students, newStudent]
-  return newStudent
+  const response = await apiFetch<{ student: ApiStudent }>('/api/students', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+  return toStudent(response.student)
 }
 
 export async function updateStudent(id: string, data: StudentInput): Promise<Student> {
-  const student = await getStudent(id)
-  if (students.some((s) => s.registration === data.registration && s.id !== id)) {
-    throw new Error('Já existe um aluno com essa matrícula.')
-  }
-
-  const updated: Student = { ...student, ...data }
-  students = students.map((s) => (s.id === id ? updated : s))
-  return updated
+  const response = await apiFetch<{ student: ApiStudent }>(`/api/students/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+  return toStudent(response.student)
 }
 
 export async function setStudentActive(id: string, active: boolean): Promise<Student> {
-  const student = await getStudent(id)
-  const updated: Student = { ...student, active }
-  students = students.map((s) => (s.id === id ? updated : s))
-  return updated
+  const response = await apiFetch<{ student: ApiStudent }>(`/api/students/${id}/status`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status: active ? 'ATIVO' : 'INATIVO' }),
+  })
+  return toStudent(response.student)
 }
 
 export async function getStudentLoans(studentId: string): Promise<Loan[]> {
-  await delay()
+  await new Promise((resolve) => setTimeout(resolve, 500))
   return loans.filter((loan) => loan.studentId === studentId)
 }
