@@ -15,7 +15,7 @@ export function LoginForm() {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { username: '', password: '' },
   })
 
   const onSubmit = async (data: LoginFormData) => {
@@ -23,8 +23,8 @@ export function LoginForm() {
     try {
       await login(data)
       navigate('/alunos', { replace: true })
-    } catch {
-      setSubmitError('Não foi possível entrar. Verifique suas credenciais.')
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Não foi possível entrar.')
     }
   }
 
@@ -41,16 +41,12 @@ export function LoginForm() {
 
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextField
-          label="Endereço de E-mail"
-          type="email"
-          placeholder="usuario@biblioteca.com"
-          autoComplete="email"
+          label="Usuário"
+          placeholder="admin"
+          autoComplete="username"
           required
-          error={errors.email?.message}
-          {...register('email', {
-            required: 'Informe seu e-mail.',
-            pattern: { value: /^\S+@\S+\.\S+$/, message: 'Informe um e-mail válido.' },
-          })}
+          error={errors.username?.message}
+          {...register('username', { required: 'Informe seu usuário.' })}
         />
 
         <PasswordField
