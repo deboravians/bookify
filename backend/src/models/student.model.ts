@@ -1,5 +1,8 @@
 import { model, Schema } from "mongoose";
 
+export const studentStatuses = ["ATIVO", "INATIVO"] as const;
+export type StudentStatus = typeof studentStatuses[number];
+
 const addressSchema = new Schema({
   city: { type: String, required: true, trim: true },
   neighborhood: { type: String, required: true, trim: true },
@@ -13,7 +16,7 @@ const studentSchema = new Schema({
   name: { type: String, required: true, trim: true },
   phone: { type: String, required: true, trim: true },
   address: { type: addressSchema, required: true },
-  status: { type: Boolean, default: true, required: true },
+  status: { type: String, enum: studentStatuses, default: "ATIVO", required: true },
 });
 
 export const Student = model("Student", studentSchema);

@@ -81,6 +81,26 @@ Tokens ausentes, inválidos ou expirados retornam 401.
 curl http://localhost:5000/api/students -H "Authorization: Bearer <accessToken>"
 ```
 
+## Status dos alunos (GA006 e GA007)
+
+O cadastro cria alunos com `status: "ATIVO"`. Para inativar ou reativar um aluno,
+use `PATCH /api/students/:id/status`, substituindo `:id` pelo `_id` retornado na
+listagem. A rota exige `Authorization: Bearer <accessToken>` e
+`Content-Type: application/json`.
+
+```json
+{ "status": "INATIVO" }
+```
+
+Para reativar, envie `{ "status": "ATIVO" }`. A resposta é 200 com `message` e
+`student` atualizado. Repetir o status atual também retorna 200. ID ou body
+inválido retorna 400; aluno inexistente retorna 404. A alteração preserva o
+cadastro e modifica apenas o status.
+
+Na inicialização da API, os status booleanos existentes são convertidos no banco:
+`true` para `ATIVO` e `false` para `INATIVO`. Reinicie a API após atualizar o código.
+A listagem e a pesquisa continuam incluindo alunos ativos e inativos.
+
 ## Scripts
 
 | Comando | Descrição |

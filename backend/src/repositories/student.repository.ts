@@ -1,8 +1,21 @@
 import { Error as MongooseError, type InferSchemaType } from "mongoose";
 import { AppError } from "../errors/app.error";
-import { Student } from "../models/student.model";
+import { Student, type StudentStatus } from "../models/student.model";
 
 type StudentData = InferSchemaType<typeof Student.schema>;
+
+export async function migrateStudentStatuses(): Promise<void> {
+  // Usa a coleção diretamente para preservar o tipo booleano no filtro legado.
+  await Student.collection.updateMany(
+    { status: { $type: "bool" } },
+    [{ $set: { status: { $cond: ["$status", "ATIVO", "INATIVO"] } } }],
+  );
+}
+
+export async function updateStudentStatus(id: string, status: StudentStatus) {
+  return Student.findByIdAndUpdate(id, { $set: { status } }, { new: true, runValidators: true })
+    .select("_id registration name phone address status").lean().exec();
+}
 
 export async function findAllStudents(search?: string) {
   // Trata o texto como literal, inclusive quando contém caracteres de regex.

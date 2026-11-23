@@ -1,4 +1,15 @@
 import { AppError } from "../errors/app.error";
+import type { StudentStatus } from "../models/student.model";
+
+export function validateStudentStatus(body: unknown): StudentStatus {
+  if (!isObject(body) || (body.status !== "ATIVO" && body.status !== "INATIVO")) {
+    throw new AppError(400, "O status deve ser ATIVO ou INATIVO.");
+  }
+  if (Object.keys(body).some((key) => key !== "status")) {
+    throw new AppError(400, "Envie apenas o campo status.");
+  }
+  return body.status;
+}
 
 export interface CreateStudentInput {
   registration: string;
