@@ -1,5 +1,6 @@
 import type { RequestHandler } from "express";
-import { authenticateAdmin } from "../services/auth.service";
+import { authenticateAdmin, generateAdminToken } from "../services/auth.service";
+import { config } from "../config";
 
 export const login: RequestHandler = (req, res) => {
   const body: unknown = req.body;
@@ -17,5 +18,9 @@ export const login: RequestHandler = (req, res) => {
     return;
   }
 
-  res.status(200).json({ message: "Login realizado com sucesso." });
+  res.status(200).json({
+    accessToken: generateAdminToken(),
+    tokenType: "Bearer",
+    expiresIn: config.jwtExpiresIn,
+  });
 };

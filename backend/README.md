@@ -35,9 +35,12 @@ Crie `.env` e ajuste as variáveis:
 
 ```dotenv
 NODE_ENV=
-PORT=
-CLIENT=
 MONGODB_URI=
+
+ADMIN_USERNAME=
+ADMIN_PASSWORD=
+JWT_SECRET=
+JWT_EXPIRES_IN=
 ```
 
 Com o MongoDB disponível, inicie a API:
@@ -65,9 +68,18 @@ Essa rota indica que o servidor HTTP está respondendo;
 - `src/services/auth.service.ts`: compara as credenciais fixas do administrador, sem acesso ao banco ou dependência do Express.
 
 O endpoint `POST /api/auth/login` recebe JSON com `username` e `password`.
-As credenciais `admin`/`admin` retornam 200; credenciais incorretas retornam 401;
+As credenciais configuradas em `ADMIN_USERNAME` e `ADMIN_PASSWORD` retornam 200; credenciais incorretas retornam 401;
 campos ausentes, vazios ou com tipos inválidos retornam 400.
-O login não cria tokens, cookies ou sessões.
+O login retorna `accessToken`, `tokenType` (`Bearer`) e `expiresIn` (segundos).
+Configure `JWT_SECRET` com pelo menos 32 bytes e `JWT_EXPIRES_IN` com um inteiro positivo em segundos.
+
+As rotas da API exigem o JWT no cabeçalho `Authorization: Bearer <accessToken>`,
+incluindo `GET /api/students` e `POST /api/students`. O login e `GET /health` são públicos.
+Tokens ausentes, inválidos ou expirados retornam 401.
+
+```sh
+curl http://localhost:5000/api/students -H "Authorization: Bearer <accessToken>"
+```
 
 ## Scripts
 
