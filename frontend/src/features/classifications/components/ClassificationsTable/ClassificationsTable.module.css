@@ -1,0 +1,37 @@
+.wrapper {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  font-size: var(--text-sm);
+  text-align: left;
+  border-collapse: collapse;
+}
+
+.table th {
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  background-color: var(--color-background);
+}
+
+.table td {
+  padding: var(--space-3) var(--space-6);
+  white-space: nowrap;
+  border-top: 1px solid var(--color-border);
+}
+
+.code {
+  font-weight: 600;
+}
+
+.actions {
+  text-align: right;
+}
+
+.buttons {
+  display: inline-flex;
+  gap: var(--space-2);
+}

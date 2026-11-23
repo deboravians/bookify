@@ -1,4 +1,5 @@
-import { RotateCcw, TriangleAlert } from 'lucide-react'
+import type { ReactNode } from 'react'
+import { RotateCcw, TriangleAlert, type LucideIcon } from 'lucide-react'
 import { Button } from '../Button/Button'
 import styles from './ConfirmDialog.module.css'
 
@@ -7,10 +8,13 @@ type ConfirmDialogProps = {
   description: string
   confirmLabel: string
   variant?: 'primary' | 'danger'
+  icon?: LucideIcon
+  iconVariant?: 'primary' | 'danger'
   isLoading?: boolean
   error?: string | null
+  children?: ReactNode
   onConfirm: () => void
-  onCancel: () => void
+  onCancel?: () => void
 }
 
 export function ConfirmDialog({
@@ -18,12 +22,15 @@ export function ConfirmDialog({
   description,
   confirmLabel,
   variant = 'primary',
+  icon,
+  iconVariant = variant,
   isLoading = false,
   error,
+  children,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
-  const Icon = variant === 'danger' ? TriangleAlert : RotateCcw
+  const Icon = icon ?? (variant === 'danger' ? TriangleAlert : RotateCcw)
 
   return (
     <div className={styles.overlay}>
@@ -33,7 +40,7 @@ export function ConfirmDialog({
         aria-modal="true"
         aria-labelledby="confirm-dialog-title"
       >
-        <span className={`${styles.icon} ${styles[variant]}`}>
+        <span className={`${styles.icon} ${styles[iconVariant]}`}>
           <Icon size={18} aria-hidden />
         </span>
 
@@ -43,6 +50,8 @@ export function ConfirmDialog({
           </h2>
           <p className={styles.description}>{description}</p>
 
+          {children}
+
           {error && (
             <p className={styles.error} role="alert">
               {error}
@@ -50,10 +59,18 @@ export function ConfirmDialog({
           )}
 
           <div className={styles.actions}>
-            <Button variant="secondary" size="sm" onClick={onCancel} disabled={isLoading} autoFocus>
-              Cancelar
-            </Button>
-            <Button variant={variant} size="sm" onClick={onConfirm} isLoading={isLoading}>
+            {onCancel && (
+              <Button variant="secondary" size="sm" onClick={onCancel} disabled={isLoading} autoFocus>
+                Cancelar
+              </Button>
+            )}
+            <Button
+              variant={variant}
+              size="sm"
+              onClick={onConfirm}
+              isLoading={isLoading}
+              autoFocus={!onCancel}
+            >
               {confirmLabel}
             </Button>
           </div>
