@@ -2,6 +2,10 @@ import { Classification } from "../models/classification.model";
 import type { CreateClassificationInput } from "../validators/classification.validator";
 import { AppError } from "../errors/app.error";
 
+export async function findAllClassifications() {
+  return Classification.find({}).select("_id title code").lean().exec();
+}
+
 export async function insertClassification(data: CreateClassificationInput) {
   try {
     return await Classification.create(data);
