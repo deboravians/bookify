@@ -10,6 +10,20 @@ export async function findAllClassifications(search?: string) {
   return Classification.find(filter).select("_id title code").lean().exec();
 }
 
+export async function updateClassification(id: string, data: CreateClassificationInput) {
+  try {
+    return await Classification.findByIdAndUpdate(id, { $set: data }, { new: true, runValidators: true })
+      .select("_id title code").lean().exec();
+  } catch (error: unknown) {
+    if (typeof error === "object" && error !== null && "code" in error && error.code === 11000 &&
+        "keyPattern" in error && typeof error.keyPattern === "object" &&
+        error.keyPattern !== null && "code" in error.keyPattern) {
+      throw new AppError(409, "Código de classificação já cadastrado.");
+    }
+    throw error;
+  }
+}
+
 export async function insertClassification(data: CreateClassificationInput) {
   try {
     return await Classification.create(data);
