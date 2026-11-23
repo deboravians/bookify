@@ -1,9 +1,9 @@
 import type { RequestHandler } from "express";
 import { listClassifications, registerClassification } from "../services/classification.service";
 
-export const getClassifications: RequestHandler = async (_req, res, next) => {
+export const getClassifications: RequestHandler = async (req, res, next) => {
   try {
-    const classifications = await listClassifications();
+    const classifications = await listClassifications(req.query.search);
     res.status(200).json(classifications);
   } catch (error: unknown) {
     next(error);

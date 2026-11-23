@@ -2,8 +2,12 @@ import { Classification } from "../models/classification.model";
 import type { CreateClassificationInput } from "../validators/classification.validator";
 import { AppError } from "../errors/app.error";
 
-export async function findAllClassifications() {
-  return Classification.find({}).select("_id title code").lean().exec();
+export async function findAllClassifications(search?: string) {
+  // Trata o texto como literal, inclusive quando contém caracteres de regex.
+  const pattern = search ? new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i") : undefined;
+  const filter = pattern ? { $or: [{ title: pattern }, { code: pattern }] } : {};
+
+  return Classification.find(filter).select("_id title code").lean().exec();
 }
 
 export async function insertClassification(data: CreateClassificationInput) {
