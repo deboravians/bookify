@@ -35,9 +35,12 @@ Crie `.env` e ajuste as variáveis:
 
 ```dotenv
 NODE_ENV=
-PORT=
-CLIENT=
 MONGODB_URI=
+
+ADMIN_USERNAME=
+ADMIN_PASSWORD=
+JWT_SECRET=
+JWT_EXPIRES_IN=
 ```
 
 Com o MongoDB disponível, inicie a API:
@@ -55,19 +58,6 @@ Acesse `GET http://localhost:5000/health`:
 ```
 
 Essa rota indica que o servidor HTTP está respondendo;
-
-## Organização do backend
-
-- `src/app.ts`: configura o Express, os middlewares e a montagem das rotas.
-- `src/server.ts`: conecta ao banco e gerencia o ciclo de vida do servidor.
-- `src/routes/auth.routes.ts`: define as rotas de autenticação.
-- `src/controllers/auth.controller.ts`: valida a entrada HTTP e retorna os status e mensagens.
-- `src/services/auth.service.ts`: compara as credenciais fixas do administrador, sem acesso ao banco ou dependência do Express.
-
-O endpoint `POST /api/auth/login` recebe JSON com `username` e `password`.
-As credenciais `admin`/`admin` retornam 200; credenciais incorretas retornam 401;
-campos ausentes, vazios ou com tipos inválidos retornam 400.
-O login não cria tokens, cookies ou sessões.
 
 ## Scripts
 
