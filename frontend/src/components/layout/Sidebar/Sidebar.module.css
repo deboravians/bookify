@@ -114,3 +114,22 @@
   font-size: 0.6875rem;
   color: var(--color-text-muted);
 }
+
+.logout {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-left: auto;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--radius-md);
+}
+
+.logout:hover {
+  color: var(--color-text);
+  background-color: var(--color-border);
+}

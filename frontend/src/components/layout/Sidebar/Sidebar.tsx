@@ -1,15 +1,17 @@
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
 import {
   ArrowDownLeft,
   ArrowUpRight,
   BookOpen,
   House,
+  LogOut,
   Tag,
   User,
   Users,
   type LucideIcon,
 } from 'lucide-react'
 import { Logo } from '@/components/Logo/Logo'
+import { logout } from '@/features/auth/services/authService'
 import styles from './Sidebar.module.css'
 
 type NavItem = { label: string; to: string; icon: LucideIcon }
@@ -40,7 +42,7 @@ const sections: NavSection[] = [
   },
 ]
 
-const currentUser = { name: 'Sofia Ribeiro', role: 'Bibliotecária' }
+const currentUser = { name: 'Administrador', role: 'Bibliotecário' }
 
 function getInitials(name: string) {
   return name
@@ -52,6 +54,13 @@ function getInitials(name: string) {
 }
 
 export function Sidebar() {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login', { replace: true })
+  }
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles.brand}>
@@ -89,6 +98,15 @@ export function Sidebar() {
           <p className={styles.userName}>{currentUser.name}</p>
           <p className={styles.userRole}>{currentUser.role}</p>
         </div>
+        <button
+          type="button"
+          className={styles.logout}
+          onClick={handleLogout}
+          aria-label="Sair"
+          title="Sair"
+        >
+          <LogOut size={16} aria-hidden />
+        </button>
       </div>
     </aside>
   )

@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router'
 import { AppLayout } from '@/components/layout/AppLayout/AppLayout'
+import { ProtectedRoute } from '@/features/auth/components/ProtectedRoute'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
 import { ClassificationsListPage } from '@/features/classifications/pages/ClassificationsListPage'
 import { CreateClassificationPage } from '@/features/classifications/pages/CreateClassificationPage'
@@ -14,15 +15,20 @@ export const router = createBrowserRouter([
   { path: '/', element: <Navigate to="/login" replace /> },
   { path: '/login', element: <LoginPage /> },
   {
-    element: <AppLayout />,
+    element: <ProtectedRoute />,
     children: [
-      { path: '/alunos', element: <StudentsListPage /> },
-      { path: '/alunos/novo', element: <CreateStudentPage /> },
-      { path: '/alunos/:id', element: <StudentProfilePage /> },
-      { path: '/alunos/:id/editar', element: <EditStudentPage /> },
-      { path: '/classificacoes', element: <ClassificationsListPage /> },
-      { path: '/classificacoes/nova', element: <CreateClassificationPage /> },
-      { path: '/classificacoes/:id/editar', element: <EditClassificationPage /> },
+      {
+        element: <AppLayout />,
+        children: [
+          { path: '/alunos', element: <StudentsListPage /> },
+          { path: '/alunos/novo', element: <CreateStudentPage /> },
+          { path: '/alunos/:id', element: <StudentProfilePage /> },
+          { path: '/alunos/:id/editar', element: <EditStudentPage /> },
+          { path: '/classificacoes', element: <ClassificationsListPage /> },
+          { path: '/classificacoes/nova', element: <CreateClassificationPage /> },
+          { path: '/classificacoes/:id/editar', element: <EditClassificationPage /> },
+        ],
+      },
     ],
   },
   { path: '*', element: <NotFoundPage /> },
