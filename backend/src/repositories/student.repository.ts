@@ -4,8 +4,12 @@ import { Student } from "../models/student.model";
 
 type StudentData = InferSchemaType<typeof Student.schema>;
 
-export async function findAllStudents() {
-  return Student.find({ }).select("_id registration name phone address status").lean().exec();
+export async function findAllStudents(search?: string) {
+  // Trata o texto como literal, inclusive quando contém caracteres de regex.
+  const pattern = search ? new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i") : undefined;
+  const filter = pattern ? { $or: [{ name: pattern }, { registration: pattern }] } : {};
+
+  return Student.find(filter).select("_id registration name phone address status").lean().exec();
 }
 
 export async function insertStudent(data: StudentData) {
