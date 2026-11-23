@@ -6,6 +6,7 @@ import { errorHandler } from "./middlewares/error.middleware";
 import { requireAdmin } from "./middlewares/auth.middleware";
 import { authRoutes } from "./routes/auth.routes";
 import { studentRoutes } from "./routes/student.routes";
+import { teacherRoutes } from "./routes/teacher.routes";
 
 export const app = express();
 
@@ -21,6 +22,7 @@ app.get("/health", (_req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api", requireAdmin);
 app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
 
 app.use((_req, res) => {
   res.status(404).json({ message: "Route not found." });
