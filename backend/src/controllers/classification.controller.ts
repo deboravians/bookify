@@ -1,5 +1,14 @@
 import type { RequestHandler } from "express";
-import { editClassification, listClassifications, registerClassification } from "../services/classification.service";
+import { editClassification, listClassifications, registerClassification, removeClassification } from "../services/classification.service";
+
+export const deleteClassification: RequestHandler<{ id: string }> = async (req, res, next) => {
+  try {
+    await removeClassification(req.params.id);
+    res.status(204).end();
+  } catch (error: unknown) {
+    next(error);
+  }
+};
 
 export const putClassification: RequestHandler<{ id: string }> = async (req, res, next) => {
   try {

@@ -1,6 +1,29 @@
-import { findAllClassifications, insertClassification, updateClassification } from "../repositories/classification.repository";
+import {
+  deleteClassificationById,
+  findAllClassifications,
+  findClassificationById,
+  hasBooksWithClassification,
+  insertClassification,
+  updateClassification,
+} from "../repositories/classification.repository";
 import { validateCreateClassification } from "../validators/classification.validator";
 import { AppError } from "../errors/app.error";
+
+export async function removeClassification(id: string): Promise<void> {
+  if (!/^[a-fA-F0-9]{24}$/.test(id)) {
+    throw new AppError(400, "ID da classificação inválido.");
+  }
+
+  if (!await findClassificationById(id)) {
+    throw new AppError(404, "Classificação não encontrada.");
+  }
+  if (await hasBooksWithClassification(id)) {
+    throw new AppError(409, "Não é possível excluir uma classificação com livros associados.");
+  }
+  if (!await deleteClassificationById(id)) {
+    throw new AppError(404, "Classificação não encontrada.");
+  }
+}
 
 export async function listClassifications(search?: unknown) {
   if (search !== undefined && typeof search !== "string") {

@@ -1,6 +1,25 @@
 import { Classification } from "../models/classification.model";
 import type { CreateClassificationInput } from "../validators/classification.validator";
 import { AppError } from "../errors/app.error";
+import { Types } from "mongoose";
+
+export async function findClassificationById(id: string) {
+  return Classification.findById(id).select("_id").lean().exec();
+}
+
+export async function hasBooksWithClassification(id: string): Promise<boolean> {
+  // O cadastro de livros deverá referenciar a classificação em books.classification.
+  // Aceita o ID como ObjectId ou string, sem criar um cadastro de livros aqui.
+  const book = await Classification.db.collection("books").findOne(
+    { classification: { $in: [new Types.ObjectId(id), id] } },
+    { projection: { _id: 1 } },
+  );
+  return book !== null;
+}
+
+export async function deleteClassificationById(id: string) {
+  return Classification.findByIdAndDelete(id).select("_id").lean().exec();
+}
 
 export async function findAllClassifications(search?: string) {
   // Trata o texto como literal, inclusive quando contém caracteres de regex.
