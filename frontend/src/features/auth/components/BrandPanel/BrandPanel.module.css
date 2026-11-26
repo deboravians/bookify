@@ -81,3 +81,45 @@
   font-style: italic;
   color: #aa573e;
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .brand {
+    animation: panelEnter 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .content {
+    animation: panelEnter 650ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+  }
+
+  .book, .bookTop, .bookStanding, .bookplate {
+    transform-box: fill-box;
+    transform-origin: center bottom;
+    animation: bookSettle 750ms cubic-bezier(0.22, 1, 0.36, 1) 160ms both;
+  }
+
+  .bookTop { animation-delay: 240ms; }
+  .bookStanding { animation-delay: 320ms; }
+  .bookplate { animation-delay: 400ms; }
+}
+
+@keyframes panelEnter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bookSettle {
+  from {
+    opacity: 0;
+    transform: translateY(14px) rotate(-1.5deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}

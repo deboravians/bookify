@@ -12,6 +12,7 @@ import { StudentsListPage } from '@/features/students/pages/StudentsListPage'
 import { TeachersListPage } from '@/features/teachers/pages/TeachersListPage'
 import { TeacherProfilePage } from '@/features/teachers/pages/TeacherProfilePage'
 import { CreateTeacherPage } from '@/features/teachers/pages/CreateTeacherPage'
+import { HomePage } from '@/features/home/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
   {
     element: <ProtectedRoute />,
     children: [
+      { path: '/inicio', element: <HomePage /> },
       {
         element: <AppLayout />,
         children: [

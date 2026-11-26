@@ -1,0 +1,115 @@
+.floating {
+  min-width: 0;
+  list-style: none;
+  animation: float 8s ease-in-out infinite;
+}
+
+.floating:nth-child(2) {
+  animation-delay: -3s;
+}
+
+.floating:nth-child(3) {
+  animation-delay: -5s;
+}
+
+.floating:nth-child(4) {
+  animation-delay: -1s;
+}
+
+.card {
+  display: block;
+  height: 100%;
+  padding: var(--space-6);
+  color: var(--color-text);
+  text-decoration: none;
+  background-color: rgb(250 247 242 / 0.9);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 32px -20px rgb(30 53 36 / 0.25);
+  backdrop-filter: blur(12px);
+  transition: transform var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+a.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--green-700);
+  box-shadow: 0 16px 32px -20px rgb(30 53 36 / 0.35);
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.floating:focus-within,
+.floating:hover {
+  animation-play-state: paused;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--green-800);
+  background-color: var(--green-100);
+  border-radius: var(--radius-full);
+}
+
+.arrow {
+  color: var(--color-text-muted);
+}
+
+.category {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.title {
+  margin-top: var(--space-2);
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  color: var(--green-900);
+}
+
+.description {
+  margin-top: var(--space-2);
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.soon {
+  padding: var(--space-1) var(--space-2);
+  font-size: 0.625rem;
+  color: var(--color-text-muted);
+  background-color: var(--sand-100);
+  border-radius: var(--radius-sm);
+}
+
+.upcoming .icon {
+  color: #8c563a;
+  background-color: var(--sand-100);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating { animation: none; }
+}
