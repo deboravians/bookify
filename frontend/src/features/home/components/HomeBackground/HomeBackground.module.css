@@ -1,0 +1,19 @@
+.background {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fallback {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 20%,
+    rgb(107 134 100 / 0.08) 35%,
+    rgb(178 123 86 / 0.1) 41%,
+    transparent 56%
+  );
+}

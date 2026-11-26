@@ -1,43 +1,31 @@
 import { Logo } from '@/components/Logo/Logo'
+import { BooksIllustration } from './BooksIllustration'
 import styles from './BrandPanel.module.css'
 
-type Quote = {
-  text: string
-  author: string
-}
-
-type BrandPanelProps = {
-  quote?: Quote
-}
-
-const DEFAULT_QUOTE: Quote = {
-  text: 'Um livro é um dispositivo para acender a imaginação.',
-  author: 'Alan Bennett',
-}
-
-export function BrandPanel({ quote = DEFAULT_QUOTE }: BrandPanelProps) {
-  const currentYear = new Date().getFullYear()
-
+export function BrandPanel() {
   return (
     <aside className={styles.panel}>
-      <Logo variant="light" />
+      <header className={styles.brand}>
+        <Logo variant="dark" />
+        <span className={styles.brandDescription}>Gestão de bibliotecas</span>
+      </header>
 
       <div className={styles.content}>
-        <h2 className={styles.headline}>Cultura, organização e sabedoria em um só lugar.</h2>
+        <p className={styles.eyebrow}>Um lugar para cada história.</p>
+        <h2 className={styles.headline}>
+          Entre livros<br />
+          e <em>pessoas.</em>
+        </h2>
         <p className={styles.description}>
-          Acesse a plataforma de gerenciamento para organizar acervos, acompanhar empréstimos e
-          cultivar o hábito da leitura.
+          Do acervo ao próximo empréstimo, cuide do que faz a sua biblioteca acontecer.
         </p>
-
-        <figure className={styles.quote}>
-          <blockquote>
-            <p>“{quote.text}”</p>
-          </blockquote>
-          <figcaption>- {quote.author}</figcaption>
-        </figure>
+        <BooksIllustration />
       </div>
 
-      <p className={styles.copyright}>© {currentYear} Bookify. Sistema de Gestão de Acervos.</p>
+      <footer className={styles.footer}>
+        <span>Acervo organizado. Histórias em circulação.</span>
+        <span className={styles.footerMark} aria-hidden="true">b.</span>
+      </footer>
     </aside>
   )
 }

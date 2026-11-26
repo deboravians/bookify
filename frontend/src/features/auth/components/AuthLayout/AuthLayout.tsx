@@ -15,10 +15,14 @@ export function AuthLayout({ children }: AuthLayoutProps) {
       </div>
 
       <main className={styles.main}>
-        <div className={styles.mobileLogo}>
-          <Logo variant="dark" />
-        </div>
-        {children}
+        <header className={styles.topbar}>
+          <div className={styles.mobileLogo}>
+            <Logo variant="dark" />
+          </div>
+          <span className={styles.area}>Área do bibliotecário</span>
+        </header>
+        <div className={styles.formContainer}>{children}</div>
+        <footer className={styles.footer}>Bookify · Gestão de bibliotecas</footer>
       </main>
     </div>
   )

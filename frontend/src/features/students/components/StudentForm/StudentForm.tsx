@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, ButtonLink } from '@/components/ui/Button/Button'
 import { TextField } from '@/components/ui/TextField/TextField'
+import { phoneRules, requiredText, trimText } from '@/lib/formValidation'
 import type { StudentInput } from '../../types'
 import styles from './StudentForm.module.css'
 
@@ -53,7 +54,7 @@ export function StudentForm({
             required
             error={errors.registration?.message}
             {...register('registration', {
-              required: 'Informe a matrícula.',
+              ...requiredText('Informe a matrícula.'),
               pattern: { value: /^\d+$/, message: 'A matrícula deve conter apenas números.' },
             })}
           />
@@ -62,13 +63,15 @@ export function StudentForm({
             placeholder="Nome do Aluno"
             required
             error={errors.name?.message}
-            {...register('name', { required: 'Informe o nome completo.' })}
+            {...register('name', requiredText('Informe o nome completo.'))}
           />
           <TextField
             label="Telefone"
             type="tel"
             placeholder="(11) 98765-4321"
-            {...register('phone')}
+            required
+            error={errors.phone?.message}
+            {...register('phone', phoneRules)}
           />
         </div>
       </fieldset>
@@ -76,16 +79,40 @@ export function StudentForm({
       <fieldset className={styles.section}>
         <legend className={styles.sectionTitle}>Endereço Residencial</legend>
         <div className={styles.grid3}>
-          <TextField label="Cidade" placeholder="Cidade" {...register('address.city')} />
-          <TextField label="Bairro" placeholder="Bairro" {...register('address.neighborhood')} />
-          <TextField label="Rua" placeholder="Nome da Rua" {...register('address.street')} />
+          <TextField
+            label="Cidade"
+            placeholder="Cidade"
+            required
+            error={errors.address?.city?.message}
+            {...register('address.city', requiredText('Informe a cidade.'))}
+          />
+          <TextField
+            label="Bairro"
+            placeholder="Bairro"
+            required
+            error={errors.address?.neighborhood?.message}
+            {...register('address.neighborhood', requiredText('Informe o bairro.'))}
+          />
+          <TextField
+            label="Rua"
+            placeholder="Nome da Rua"
+            required
+            error={errors.address?.street?.message}
+            {...register('address.street', requiredText('Informe a rua.'))}
+          />
         </div>
         <div className={styles.grid2}>
-          <TextField label="Número" placeholder="Ex: 123" {...register('address.number')} />
+          <TextField
+            label="Número"
+            placeholder="Ex: 123"
+            required
+            error={errors.address?.number?.message}
+            {...register('address.number', requiredText('Informe o número.'))}
+          />
           <TextField
             label="Complemento"
             placeholder="Apto, Bloco, etc."
-            {...register('address.complement')}
+            {...register('address.complement', { setValueAs: trimText })}
           />
         </div>
       </fieldset>
