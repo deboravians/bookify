@@ -26,6 +26,11 @@ export async function listTeachers(search = ''): Promise<Teacher[]> {
   return teachers.map(toTeacher)
 }
 
+export async function getTeacher(id: string): Promise<Teacher> {
+  const response = await apiFetch<{ teacher: ApiTeacher }>(`/api/teachers/${id}`)
+  return toTeacher(response.teacher)
+}
+
 export async function createTeacher(data: TeacherInput): Promise<Teacher> {
   const response = await apiFetch<{ teacher: ApiTeacher }>('/api/teachers', {
     method: 'POST',
