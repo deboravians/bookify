@@ -31,18 +31,19 @@ export function LoginForm() {
   return (
     <section className={styles.card} aria-labelledby="login-title">
       <header className={styles.header}>
+        <p className={styles.eyebrow}>Sua biblioteca, por aqui.</p>
         <h1 id="login-title" className={styles.title}>
-          Acesse sua conta
+          Bom ter você de volta.
         </h1>
         <p className={styles.subtitle}>
-          Insira suas credenciais cadastradas para entrar no sistema.
+          Entre com seu usuário para continuar.
         </p>
       </header>
 
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)} noValidate>
         <TextField
           label="Usuário"
-          placeholder="admin"
+          placeholder="Seu usuário"
           autoComplete="username"
           required
           error={errors.username?.message}
@@ -50,8 +51,8 @@ export function LoginForm() {
         />
 
         <PasswordField
-          label="Senha de Acesso"
-          placeholder="••••••••••••"
+          label="Senha"
+          placeholder="Sua senha"
           autoComplete="current-password"
           required
           error={errors.password?.message}
@@ -65,9 +66,12 @@ export function LoginForm() {
         )}
 
         <Button type="submit" fullWidth isLoading={isSubmitting} className={styles.submit}>
-          {isSubmitting ? 'Entrando...' : 'Entrar no Sistema'}
+          {isSubmitting ? 'Entrando...' : 'Entrar na biblioteca'}
         </Button>
       </form>
+      <p className={styles.help}>
+        Precisa de acesso? Fale com o responsável pela biblioteca.
+      </p>
     </section>
   )
 }
