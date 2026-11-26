@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { Plus } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/Button/Button'
 import { PageHeader } from '@/components/ui/PageHeader/PageHeader'
 import { SearchInput } from '@/components/ui/SearchInput/SearchInput'
 import { TeachersTable } from '../components/TeachersTable/TeachersTable'
@@ -56,6 +58,12 @@ export function TeachersListPage() {
       <PageHeader
         title="Professores Cadastrados"
         description="Gerencie os dados, qualificações e status dos leitores docentes"
+        action={
+          <ButtonLink to="/professores/novo">
+            <Plus size={16} aria-hidden />
+            Cadastrar Professor
+          </ButtonLink>
+        }
       />
 
       <section className={styles.card}>

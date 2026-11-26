@@ -11,6 +11,7 @@ import { StudentProfilePage } from '@/features/students/pages/StudentProfilePage
 import { StudentsListPage } from '@/features/students/pages/StudentsListPage'
 import { TeachersListPage } from '@/features/teachers/pages/TeachersListPage'
 import { TeacherProfilePage } from '@/features/teachers/pages/TeacherProfilePage'
+import { CreateTeacherPage } from '@/features/teachers/pages/CreateTeacherPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
         element: <AppLayout />,
         children: [
           { path: '/professores', element: <TeachersListPage /> },
+          { path: '/professores/novo', element: <CreateTeacherPage /> },
           { path: '/professores/:id', element: <TeacherProfilePage /> },
           { path: '/alunos', element: <StudentsListPage /> },
           { path: '/alunos/novo', element: <CreateStudentPage /> },

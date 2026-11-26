@@ -1,5 +1,5 @@
 import { apiFetch } from '@/lib/api'
-import type { Address, Teacher } from '../types'
+import type { Address, Teacher, TeacherInput } from '../types'
 
 type ApiTeacher = {
   _id: string
@@ -24,4 +24,12 @@ export async function listTeachers(search = ''): Promise<Teacher[]> {
   const query = term ? `?search=${encodeURIComponent(term)}` : ''
   const teachers = await apiFetch<ApiTeacher[]>(`/api/teachers${query}`)
   return teachers.map(toTeacher)
+}
+
+export async function createTeacher(data: TeacherInput): Promise<Teacher> {
+  const response = await apiFetch<{ teacher: ApiTeacher }>('/api/teachers', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  })
+  return toTeacher(response.teacher)
 }

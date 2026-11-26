@@ -14,3 +14,5 @@ export type Teacher = {
   address: Address
   active: boolean
 }
+
+export type TeacherInput = Omit<Teacher, 'id' | 'active'>
