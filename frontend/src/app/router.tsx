@@ -12,6 +12,7 @@ import { StudentsListPage } from '@/features/students/pages/StudentsListPage'
 import { TeachersListPage } from '@/features/teachers/pages/TeachersListPage'
 import { TeacherProfilePage } from '@/features/teachers/pages/TeacherProfilePage'
 import { CreateTeacherPage } from '@/features/teachers/pages/CreateTeacherPage'
+import { EditTeacherPage } from '@/features/teachers/pages/EditTeacherPage'
 import { HomePage } from '@/features/home/pages/HomePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
           { path: '/professores', element: <TeachersListPage /> },
           { path: '/professores/novo', element: <CreateTeacherPage /> },
           { path: '/professores/:id', element: <TeacherProfilePage /> },
+          { path: '/professores/:id/editar', element: <EditTeacherPage /> },
           { path: '/alunos', element: <StudentsListPage /> },
           { path: '/alunos/novo', element: <CreateStudentPage /> },
           { path: '/alunos/:id', element: <StudentProfilePage /> },

@@ -39,6 +39,14 @@ export async function createTeacher(data: TeacherInput): Promise<Teacher> {
   return toTeacher(response.teacher)
 }
 
+export async function updateTeacher(id: string, data: TeacherInput): Promise<Teacher> {
+  const response = await apiFetch<{ teacher: ApiTeacher }>(`/api/teachers/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  })
+  return toTeacher(response.teacher)
+}
+
 export async function setTeacherActive(id: string, active: boolean): Promise<Teacher> {
   const response = await apiFetch<{ teacher: ApiTeacher }>(`/api/teachers/${id}/status`, {
     method: 'PATCH',

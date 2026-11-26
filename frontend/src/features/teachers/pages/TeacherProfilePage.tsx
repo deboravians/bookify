@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router'
+import { SquarePen } from 'lucide-react'
+import { ButtonLink } from '@/components/ui/Button/Button'
 import { ConfirmDialog } from '@/components/ui/ConfirmDialog/ConfirmDialog'
 import { PageHeader } from '@/components/ui/PageHeader/PageHeader'
 import { TeacherInfoCard } from '../components/TeacherInfoCard/TeacherInfoCard'
@@ -79,7 +81,16 @@ export function TeacherProfilePage() {
 
   return (
     <>
-      <PageHeader title="Perfil do Leitor" description="Informações completas do professor" />
+      <PageHeader
+        title="Perfil do Leitor"
+        description="Informações completas do professor"
+        action={
+          <ButtonLink to={`/professores/${teacher.id}/editar`} variant="secondary" size="sm">
+            <SquarePen size={14} aria-hidden />
+            Editar Dados
+          </ButtonLink>
+        }
+      />
       <div className={styles.grid}>
         <TeacherInfoCard teacher={teacher} />
         <TeacherStatusCard
