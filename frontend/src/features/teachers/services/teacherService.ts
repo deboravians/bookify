@@ -19,7 +19,9 @@ function toTeacher({ _id, status, address, ...rest }: ApiTeacher): Teacher {
   }
 }
 
-export async function listTeachers(): Promise<Teacher[]> {
-  const teachers = await apiFetch<ApiTeacher[]>('/api/teachers')
+export async function listTeachers(search = ''): Promise<Teacher[]> {
+  const term = search.trim()
+  const query = term ? `?search=${encodeURIComponent(term)}` : ''
+  const teachers = await apiFetch<ApiTeacher[]>(`/api/teachers${query}`)
   return teachers.map(toTeacher)
 }

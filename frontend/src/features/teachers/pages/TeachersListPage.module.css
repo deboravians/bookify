@@ -6,26 +6,12 @@
 }
 
 .toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: var(--space-3);
   padding: var(--space-4) var(--space-6);
 }
 
 .search {
   width: 100%;
   max-width: 16rem;
-}
-
-.filter {
-  color: var(--color-primary);
-}
-
-.filter[aria-pressed='true'] {
-  background-color: var(--green-100);
-  border-color: var(--color-primary);
 }
 
 .message {

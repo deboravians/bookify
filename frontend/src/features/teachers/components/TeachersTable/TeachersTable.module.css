@@ -30,3 +30,7 @@
 .muted {
   color: var(--color-text-muted);
 }
+
+.actions {
+  text-align: right;
+}
